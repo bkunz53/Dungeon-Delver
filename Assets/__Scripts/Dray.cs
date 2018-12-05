@@ -9,14 +9,17 @@ public class Dray : MonoBehaviour, IFacingMover
     public float speed = 5;
     public float attackDuration = 0.25f;// Number of seconds to attack 
     public float attackDelay = 0.5f;    // Delay between attacks
+    public float transitionDelay = 0.5f;
 
     [Header("Set Dynamically")]
     public int dirHeld = -1; // Direction of the held movement key 
     public int facing = 1;   // Direction Dray is facing 
     public eMode mode = eMode.idle;                                // a 
 
-    private float timeAtkDone = 0;                                  // b 
-    private float timeAtkNext = 0;
+    private float timeAtkDone = 0;
+    private float timeAtkNext = 0;
+    private float transitionDone = 0;                               // a
+    private Vector2 transitionPos;
 
     private Rigidbody rigid;
     private Animator anim;
@@ -36,6 +39,15 @@ KeyCode.UpArrow, KeyCode.LeftArrow, KeyCode.DownArrow };
 
     void Update()
     {
+        if (mode == eMode.transition)
+        {                                     // b
+            rigid.velocity = Vector3.zero;
+            anim.speed = 0;
+            roomPos = transitionPos;  // Keeps Dray in place
+            if (Time.time < transitionDone) return;
+            // The following line is only reached if Time.time >= transitionDone
+            mode = eMode.idle;
+        }
         dirHeld = -1;
         for (int i = 0; i < 4; i++)
         {
@@ -92,6 +104,54 @@ KeyCode.UpArrow, KeyCode.LeftArrow, KeyCode.DownArrow };
         }
 
         rigid.velocity = vel * speed;
+    }
+    void LateUpdate()
+    {
+        // Get the half-grid location of this GameObject
+        Vector2 rPos = GetRoomPosOnGrid(0.5f);  // Forces half-grid         // c
+
+        // Check to see whether we're in a Door tile
+        int doorNum;
+        for (doorNum = 0; doorNum < 4; doorNum++)
+        {
+            if (rPos == InRoom.DOORS[doorNum])
+            {
+                break;                                                        // d
+            }
+        }
+
+        if (doorNum > 3 || doorNum != facing) return;                       // e
+
+        // Move to the next room
+        Vector2 rm = roomNum;
+        switch (doorNum)
+        {                                                    // f
+            case 0:
+                rm.x += 1;
+                break;
+            case 1:
+                rm.y += 1;
+                break;
+            case 2:
+                rm.x -= 1;
+                break;
+            case 3:
+                rm.y -= 1;
+                break;
+        }
+
+        // Make sure that the rm we want to jump to is valid
+        if (rm.x >= 0 && rm.x <= InRoom.MAX_RM_X)
+        {                           // g
+            if (rm.y >= 0 && rm.y <= InRoom.MAX_RM_Y)
+            {
+                roomNum = rm;
+                transitionPos = InRoom.DOORS[(doorNum + 2) % 4];              // h
+                roomPos = transitionPos;
+                mode = eMode.transition;                                      // i
+                transitionDone = Time.time + transitionDelay;
+            }
+        }
     }
     // Implementation of IFacingMover 
     public int GetFacing()
