@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2017
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dungeon-Delver", "Dungeon-Delver.csproj", "{1342C513-A500-1165-84DF-DD73B98D9907}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dungeon-Delver", "Dungeon-Delver.csproj", "{1342C513-A500-1165-84DF-DD73B98D9907}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dungeon-Delver.Editor", "Dungeon-Delver.Editor.csproj", "{65C7808E-3BAA-C05B-E401-447E222E95ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dungeon-Delver.Editor", "Dungeon-Delver.Editor.csproj", "{65C7808E-3BAA-C05B-E401-447E222E95ED}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dungeon-Delver.Editor", "Dungeon-Delver.Editor.csproj", "{65C7808E-3BAA-C05B-E401-447E222E95ED}"
 EndProject
@@ -17,6 +21,18 @@ Global
 		{1342C513-A500-1165-84DF-DD73B98D9907}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1342C513-A500-1165-84DF-DD73B98D9907}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1342C513-A500-1165-84DF-DD73B98D9907}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1342C513-A500-1165-84DF-DD73B98D9907}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1342C513-A500-1165-84DF-DD73B98D9907}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1342C513-A500-1165-84DF-DD73B98D9907}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1342C513-A500-1165-84DF-DD73B98D9907}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65C7808E-3BAA-C05B-E401-447E222E95ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65C7808E-3BAA-C05B-E401-447E222E95ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65C7808E-3BAA-C05B-E401-447E222E95ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65C7808E-3BAA-C05B-E401-447E222E95ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65C7808E-3BAA-C05B-E401-447E222E95ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65C7808E-3BAA-C05B-E401-447E222E95ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65C7808E-3BAA-C05B-E401-447E222E95ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65C7808E-3BAA-C05B-E401-447E222E95ED}.Release|Any CPU.Build.0 = Release|Any CPU
 		{65C7808E-3BAA-C05B-E401-447E222E95ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{65C7808E-3BAA-C05B-E401-447E222E95ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65C7808E-3BAA-C05B-E401-447E222E95ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -24,8 +40,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {ABE98016-8781-4FCA-9F1A-2020ED4D59FC}
 	EndGlobalSection
 EndGlobal
