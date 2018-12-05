@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dray : MonoBehaviour, IFacingMover
+public class Dray : MonoBehaviour, IFacingMover, IKeyMaster
 {
     public enum eMode { idle, move, attack, transition }
     [Header("Set in Inspector")]
@@ -10,11 +10,21 @@ public class Dray : MonoBehaviour, IFacingMover
     public float attackDuration = 0.25f;// Number of seconds to attack 
     public float attackDelay = 0.5f;    // Delay between attacks
     public float transitionDelay = 0.5f;
+    public int maxHealth = 10;
 
     [Header("Set Dynamically")]
     public int dirHeld = -1; // Direction of the held movement key 
     public int facing = 1;   // Direction Dray is facing 
-    public eMode mode = eMode.idle;                                // a 
+    public eMode mode = eMode.idle;
+    public int numKeys = 0;// a 
+    [SerializeField]                                                          // b
+    private int _health;
+
+    public int health
+    {                                                       // c
+        get { return _health; }
+        set { _health = value; }
+    }
 
     private float timeAtkDone = 0;
     private float timeAtkNext = 0;
@@ -35,6 +45,7 @@ KeyCode.UpArrow, KeyCode.LeftArrow, KeyCode.DownArrow };
         rigid = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         inRm = GetComponent<InRoom>();
+        health = maxHealth;
     }
 
     void Update()
@@ -192,5 +203,10 @@ KeyCode.UpArrow, KeyCode.LeftArrow, KeyCode.DownArrow };
     public Vector2 GetRoomPosOnGrid(float mult = -1)
     {
         return inRm.GetRoomPosOnGrid(mult);
+    }
+    public int keyCount
+    {                                                     // d
+        get { return numKeys; }
+        set { numKeys = value; }
     }
 }
