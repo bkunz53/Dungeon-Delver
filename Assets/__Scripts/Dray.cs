@@ -22,6 +22,9 @@ public class Dray : MonoBehaviour, IFacingMover, IKeyMaster {
     [SerializeField]                                                          // b
     private int _health;
     public bool invincible = false;
+    public bool hasGrappler = false;
+    public Vector3 lastSafeLoc;                                     // a
+    public int lastSafeFacing;
 
     public int health
     {                                                       // c
@@ -54,7 +57,10 @@ KeyCode.UpArrow, KeyCode.LeftArrow, KeyCode.DownArrow };
         anim = GetComponent<Animator>();
         inRm = GetComponent<InRoom>();
         health = maxHealth;
+        lastSafeLoc = transform.position; // The start position is safe. 
+        lastSafeFacing = facing;
     }
+
 
     void Update()
     {
@@ -215,6 +221,36 @@ KeyCode.UpArrow, KeyCode.LeftArrow, KeyCode.DownArrow };
             mode = eMode.knockback;
             knockbackDone = Time.time + knockbackDuration;
         }
+    }
+    void OnTriggerEnter(Collider colld)
+    {
+        PickUp pup = colld.GetComponent<PickUp>();                           // a
+        if (pup == null) return;
+
+        switch (pup.itemType)
+        {
+            case PickUp.eType.health:
+                health = Mathf.Min(health + 2, maxHealth);
+                break;
+
+            case PickUp.eType.key:
+                keyCount++;
+                break;
+            case PickUp.eType.grappler:                                      // c
+                hasGrappler = true;
+                break;
+        }
+
+        Destroy(colld.gameObject);
+    }
+    public void ResetInRoom(int healthLoss = 0)
+    {                            // d
+        transform.position = lastSafeLoc;
+        facing = lastSafeFacing;
+        health -= healthLoss;
+
+        invincible = true; // Make Dray invincible 
+        invincibleDone = Time.time + invincibleDuration;
     }
     // Implementation of IFacingMover 
     public int GetFacing()
